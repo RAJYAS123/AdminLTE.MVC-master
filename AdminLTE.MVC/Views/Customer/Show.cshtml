@@ -1,0 +1,148 @@
+﻿@model IEnumerable<AdminLTE.MVCDemo.Models.tblemployees1>
+
+@{
+    ViewData["Title"] = "Show";
+    Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
+}
+@*<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />*@
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/jquery/jquery.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/dataTables.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+
+
+
+<p>
+    <a asp-action="Add" class="btn btn-outline-primary">Create New Customer</a>
+</p>
+<table id="myTable" class="table bg-blue" width="100%" cellspacing="0">
+    <thead>
+        <tr style="color:aqua">
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Gender</th>
+            <th>Country</th>
+            <th>State</th>
+            <th>Salary</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="color:ghostwhite">
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+                <td>
+                    <a asp-action="Add" class="btn btn-info" asp-route-id="@item.id">Edit</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script src="~/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        debugger
+        $("#myTable").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "columns": [
+                { "data": "Id", "name": "Id", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "Age", "name": "Age", "autoWidth": true },
+                { "data": "Address", "name": "Address", "autoWidth": true },
+                { "data": "Gender", "name": "Gender", "autoWidth": true },
+                { "data": "Country", "name": "Country", "autoWidth": true },
+                { "data": "State", "name": "State", "autoWidth": true },
+                { "data": "Salary", "name": "Salary", "autoWidth": true },
+
+            ]
+
+        });
+    });
+</script>
+
+
+@*@section Scripts
+    {
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
+
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>*@
+
+@*}*@
+
+
+@*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+
+
+
+
+        //$(document).ready(function () {
+        //    $('#myTable').DataTable({
+        //        lengthChange: false,
+        //        info: false,
+        //        searching: true,
+        //        dom: 'lrtip',
+        //        scrollX: false,
+        //        pageLength: 10,
+        //        deferRender: true,
+        //        scrollY: 200,
+        //        scrollCollapse: true,
+        //        scroller: true,
+        //        bLengthChange: true,
+        //        lengthMenu: [[5, 10, -1], [5, 10, "All"]],
+        //        bFilter: true,
+        //        bSort: true,
+        //        bPaginate: true
+
+
+        //    });
+        //});
+
+    </script>*@
+

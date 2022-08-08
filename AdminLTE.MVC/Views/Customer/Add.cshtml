@@ -1,0 +1,98 @@
+﻿@model AdminLTE.MVCDemo.Models.TableCollection
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
+}
+
+<h1>Add Customer</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="gender" class="control-label"></label>
+                <br />
+                @for (int i = 0; i < Model.tblgenders.Count; i++)
+                {
+                    @Model.tblgenders[i].gname @Html.RadioButtonFor(x => x.gender, Model.tblgenders[i].gid) <br />
+                }
+                <span asp-validation-for="gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="country" class="control-label"></label>
+                <br />
+                @Html.DropDownListFor(x => x.country, new SelectList(Model.tblcountries, "cid", "cname"), "--Select Country--", new { onchange = "BindState()", @class = "form-control" })
+                <span asp-validation-for="country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="state" class="control-label"></label>
+                <br />
+                @Html.DropDownListFor(x => x.state, new SelectList(""), "--Select State--", new { @class = "form-control" })
+                <input type="hidden" id="hdnstate" value="@Model.state" />
+                <span asp-validation-for="state" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@ViewBag.BT" class="btn btn-block btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-outline-info" asp-action="Show">Back to List</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    BindState();
+    function BindState() {
+
+        $.ajax({
+            url: '/Customer/GetState',
+            type: 'post',
+            data: { A: $("#country").val() },
+            success: function (data) {
+
+                $("#state").empty();
+                var hdnstate = $("#hdnstate").val();
+                $("#state").append($('<option></option>').html("Select State").val(0));
+                for (var i = 0; i < data.length; i++) {
+                    $("#state").append($('<option></option>').html(data[i].sname).val(data[i].sid));
+                }
+                if (hdnstate != null && hdnstate != undefined) {
+                    $("#state").val(hdnstate);
+                }
+            },
+            error: function () {
+                alert('State not bind.');
+            }
+        });
+    }
+</script>
